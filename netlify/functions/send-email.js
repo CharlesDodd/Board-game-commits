@@ -31,7 +31,7 @@ exports.handler = async function(event, context) {
     }
     
     // Set SendGrid API key (stored in Netlify environment variables)
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY_2);
     
     // Create email content based on value
     const emailContent = `Your submitted value is: ${value}`;
