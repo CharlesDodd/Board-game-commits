@@ -25,7 +25,7 @@ exports.handler = async function(event, context) {
     // Send emails to both addresses
     const msg1 = {
       to: email1,
-      from: 'your-verified-sender@example.com', // Must be verified in SendGrid
+      from: 'boardgamecommits@gmail.com', // Must be verified in SendGrid
       subject: 'Your App Notification',
       text: emailContent,
     };
