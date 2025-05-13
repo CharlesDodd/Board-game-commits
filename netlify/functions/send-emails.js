@@ -6,7 +6,7 @@ exports.handler = async function(event, context) {
       return {
       statusCode: 200,
       headers: {
-          "Access-Control-Allow-Origin": "https://charlesdodd.github.io",
+          "Access-Control-Allow-Origin": "https://charlesdodd.github.io/Board-game-commits/",
           "Access-Control-Allow-Headers": "Content-Type",
           "Access-Control-Allow-Methods": "POST, OPTIONS"
       },
@@ -60,7 +60,7 @@ exports.handler = async function(event, context) {
     return {
         statusCode: 200,
         headers: {
-          "Access-Control-Allow-Origin": "https://charlesdodd.github.io", 
+          "Access-Control-Allow-Origin": "https://charlesdodd.github.io/Board-game-commits/", 
           "Access-Control-Allow-Headers": "Content-Type",
           "Access-Control-Allow-Methods": "POST, OPTIONS"
         },
