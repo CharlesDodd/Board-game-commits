@@ -10,7 +10,7 @@ document.getElementById('emailForm').addEventListener('submit', async function(e
     
     try {
       // Call your Netlify function
-      const response = await fetch('https://boardgamecommits.netlify.app/.netlify/functions/send-email', {
+      const response = await fetch('/.netlify/functions/send-email', {
         method: 'POST',
         body: JSON.stringify({ email1, email2, value }),
         headers: {
