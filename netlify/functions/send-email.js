@@ -46,7 +46,7 @@ exports.handler = async function(event, context) {
     
     const msg2 = {
       to: email2,
-      from: 'boardgamecommits@example.com',
+      from: 'boardgamecommits@gmail.com',
       subject: 'Your App Notification',
       text: emailContent,
     };
