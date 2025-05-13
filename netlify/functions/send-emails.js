@@ -1,6 +1,20 @@
 const sgMail = require('@sendgrid/mail');
 
 exports.handler = async function(event, context) {
+// Handle OPTIONS request (for CORS preflight)
+  if (event.httpMethod === "OPTIONS") {
+      return {
+      statusCode: 200,
+      headers: {
+          "Access-Control-Allow-Origin": "https://charlesdodd.github.io",
+          "Access-Control-Allow-Headers": "Content-Type",
+          "Access-Control-Allow-Methods": "POST, OPTIONS"
+      },
+      body: ""
+      };
+  }
+    
+
   // Only allow POST requests
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
@@ -32,7 +46,7 @@ exports.handler = async function(event, context) {
     
     const msg2 = {
       to: email2,
-      from: 'your-verified-sender@example.com',
+      from: 'boardgamecommits@example.com',
       subject: 'Your App Notification',
       text: emailContent,
     };
@@ -44,9 +58,14 @@ exports.handler = async function(event, context) {
     ]);
     
     return {
-      statusCode: 200,
-      body: JSON.stringify({ message: "Emails sent successfully" })
-    };
+        statusCode: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "https://charlesdodd.github.io", 
+          "Access-Control-Allow-Headers": "Content-Type",
+          "Access-Control-Allow-Methods": "POST, OPTIONS"
+        },
+        body: JSON.stringify({ message: "Emails sent successfully" })
+      };
   } catch (error) {
     console.log('Error sending email:', error);
     return {
