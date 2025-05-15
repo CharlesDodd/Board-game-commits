@@ -1,26 +1,35 @@
 const sgMail = require('@sendgrid/mail');
 
 exports.handler = async function(event, context) {
-// Handle OPTIONS request (for CORS preflight)
+  // Set up CORS headers to reuse
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": "*", // In production, restrict to your domain
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS"
+  };
+  
+  // Handle OPTIONS request (for CORS preflight)
   if (event.httpMethod === "OPTIONS") {
-      return {
+    return {
       statusCode: 200,
-      headers: {
-          "Access-Control-Allow-Origin": "https://charlesdodd.github.io/Board-game-commits/",
-          "Access-Control-Allow-Headers": "Content-Type",
-          "Access-Control-Allow-Methods": "POST, OPTIONS"
-      },
+      headers: corsHeaders,
       body: ""
-      };
-  }
-    
-
-  // Only allow POST requests
-  if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed" };
+    };
   }
   
-  try {
+  // Handle GET requests (for testing)
+  if (event.httpMethod === "GET") {
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: JSON.stringify({ message: "Send email function is working!" })
+    };
+  }
+
+  // Handle POST requests (actual email sending)
+  if (event.httpMethod === "POST") {
+    try {
+
     // Parse the incoming JSON
     const data = JSON.parse(event.body);
     const { email1, email2, value } = data;
@@ -59,18 +68,23 @@ exports.handler = async function(event, context) {
     
     return {
         statusCode: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "https://charlesdodd.github.io/Board-game-commits/", 
-          "Access-Control-Allow-Headers": "Content-Type",
-          "Access-Control-Allow-Methods": "POST, OPTIONS"
-        },
+        headers: corsHeaders,
         body: JSON.stringify({ message: "Emails sent successfully" })
       };
-  } catch (error) {
-    console.log('Error sending email:', error);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: "Failed to send emails" })
-    };
+    } catch (error) {
+      console.log('Error sending email:', error);
+      return {
+        statusCode: 500,
+        headers: corsHeaders,
+        body: JSON.stringify({ error: "Failed to send emails" })
+      };
+    }
   }
+
+  // If method is neither GET, POST, nor OPTIONS
+  return {
+    statusCode: 405,
+    headers: corsHeaders,
+    body: JSON.stringify({ error: "Method Not Allowed" })
+  };
 };
