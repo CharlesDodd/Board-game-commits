@@ -265,7 +265,8 @@ exports.handler = async (event, context) => {
     console.error('Detailed error information:');
     console.error('Error message:', error.message);
     console.error('Error code:', error.code);
-    console.error('Error response:', error.response?.body);
+    console.error('Error response body:', JSON.stringify(error.response?.body, null, 2));
+    console.error('SendGrid errors array:', error.response?.body?.errors);
     console.error('Full error:', error);
 
     // Return different error messages based on the error type
