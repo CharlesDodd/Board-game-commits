@@ -43,7 +43,10 @@ exports.handler = async function(event, context) {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY_2);
     
     // Create email content based on value
-    const emailContent = `Your submitted value is: ${value}`;
+
+    const emptyArray = new Uint32Array(10);
+    const randomArray = Crypto.getRandomValues(myArray)  
+    const emailContent = `${email1} has committed to the value: ${value}, the following is a random array: ${randomArray}`;
     
     // Send emails to both addresses
     const msg1 = {
