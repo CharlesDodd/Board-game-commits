@@ -46,7 +46,7 @@ exports.handler = async function(event, context) {
 
     const emptyArray = new Uint32Array(10);
     const randomArray = Crypto.getRandomValues(myArray)  
-    const emailContent = `${email1} has committed to the value: ${value}, the following is a random array: ${randomArray}`;
+    const emailContent = `${email1} has committed to the value: ${value}, the following is a random array:`;
     
     // Send emails to both addresses
     const msg1 = {
