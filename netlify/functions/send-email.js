@@ -1,4 +1,5 @@
 const sgMail = require('@sendgrid/mail');
+const { stringify } = require('querystring');
 
 exports.handler = async function(event, context) {
   // Set up CORS headers to reuse
@@ -42,11 +43,34 @@ exports.handler = async function(event, context) {
     // Set SendGrid API key (stored in Netlify environment variables)
     sgMail.setApiKey(process.env.SENDGRID_API_KEY_2);
     
+    // Generate randomness and hash value with randomness.
+
+    const crypto = require('crypto');
+
+    function hashWithRandomness(x, r) {
+      // Combine x and r (e.g., concatenate as strings)
+      const combined = x + r;
+      
+      // Create a SHA-256 hash
+      const hash = crypto.createHash('sha256');
+      hash.update(combined);
+      
+      // Return the hexadecimal representation of the hash
+      return hash.digest('hex');
+    }
+
+    // Example usage
+    // const x = "myValue";
+    const r = crypto.randomBytes(16).toString('hex'); // Generate random bytes
+    const randombytestring = stringify(r);
+    const hash = hashWithRandomness(value, r);
+    console.log('SHA-256 Hash:', hash);
+
     // Create email content based on value
 
-    const emptyArray = new Uint32Array(10);
-    const randomArray = Crypto.getRandomValues(myArray)  
-    const emailContent = `${email1} has committed to the value: ${value}, the following is a random array:`;
+    // const emptyArray = new Uint32Array(10);
+    // const randomArray = Crypto.getRandomValues(emptyArray)  
+    const emailContent = `${email1} has committed to the value: ${value}, the following is the hash of ${value} with randomness ${r}:`;
     
     // Send emails to both addresses
     const msg1 = {
