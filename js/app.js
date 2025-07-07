@@ -50,3 +50,45 @@ document.getElementById('emailForm').addEventListener('submit', async function(e
       
 
   });
+
+async function verifyHash(event) {
+  event.preventDefault();
+  
+  const value = document.getElementById('hashValue').value;
+  const key = document.getElementById('hashKey').value;
+  const providedHash = document.getElementById('providedHash').value;
+  const calculatedHashDiv = document.getElementById('calculatedHash');
+  const hashComparisonDiv = document.getElementById('hashComparison');
+
+  try {
+    // Combine value and key for hashing
+    const input = value + key;
+    const msgBuffer = new TextEncoder().encode(input);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const calculatedHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+    // Display calculated hash
+    calculatedHashDiv.textContent = `Calculated Hash: ${calculatedHash}`;
+
+    // Compare hashes and display result
+    if (calculatedHash === providedHash.toLowerCase()) {
+      hashComparisonDiv.style.backgroundColor = '#28a745';
+      hashComparisonDiv.style.padding = '0.5rem';
+      hashComparisonDiv.style.borderRadius = '4px';
+      hashComparisonDiv.textContent = 'Hashes match!';
+    } else {
+      hashComparisonDiv.style.backgroundColor = '#dc3545';
+      hashComparisonDiv.style.padding = '0.5rem';
+      hashComparisonDiv.style.borderRadius = '4px';
+      hashComparisonDiv.textContent = 'Hashes do not match!';
+    }
+  } catch (error) {
+    hashComparisonDiv.style.backgroundColor = '#dc3545';
+    hashComparisonDiv.style.padding = '0.5rem';
+    hashComparisonDiv.style.borderRadius = '4px';
+    hashComparisonDiv.textContent = `Error: ${error.message}`;
+  }
+}
+
+document.getElementById('hashForm').addEventListener('submit', verifyHash);
