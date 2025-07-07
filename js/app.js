@@ -31,3 +31,22 @@ document.getElementById('emailForm').addEventListener('submit', async function(e
       statusDiv.textContent = `Error: ${error.message}`;
     }
   });
+
+
+  document.getElementById('emailForm').addEventListener('test', async function(e) {
+    e.preventDefault();
+    
+    // const statusDiv = document.getElementById('status');
+    // statusDiv.textContent = 'Generating...';
+    
+    // const email1 = document.getElementById('email1').value;
+    // const email2 = document.getElementById('email2').value;
+    const value = document.getElementById('value').value;
+    
+
+
+      
+
+      
+
+  });

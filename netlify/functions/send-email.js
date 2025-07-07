@@ -70,21 +70,22 @@ exports.handler = async function(event, context) {
 
     // const emptyArray = new Uint32Array(10);
     // const randomArray = Crypto.getRandomValues(emptyArray)  
-    const emailContent = `${email1} has committed to the value: ${value}, the following is the hash of ${value} with randomness ${r}:`;
-    
+    const emailContent1 = `You have committed to the value: ${value}, the following is the hash of ${value} with your key ${r}. Hash: ${hash}`;
+    const emailContent2 = `${email1} has committed to the value: ${value}, the following is the hash of ${value} with a key. Hash: ${hash}`;
+
     // Send emails to both addresses
     const msg1 = {
       to: email1,
       from: 'boardgamecommits@gmail.com', // Must be verified in SendGrid
-      subject: 'Your App Notification',
-      text: emailContent,
+      subject: 'Your Commitment',
+      text: emailContent1,
     };
     
     const msg2 = {
       to: email2,
       from: 'boardgamecommits@gmail.com',
-      subject: 'Your App Notification',
-      text: emailContent,
+      subject: 'A Commitment',
+      text: emailContent2,
     };
     
     // Send both emails
